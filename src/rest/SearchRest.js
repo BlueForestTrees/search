@@ -35,21 +35,8 @@ router.get("/api/search",
         const filter = {}
 
         if (oid !== undefined) filter.oid = oid
-        if (q !== undefined) {
-            const termFilter = {$regex: new RegExp(`^.*${regexEscape(q)}.*`, "i")}
-            filter.$or = [
-                {name: termFilter},
-                {stores: termFilter},
-                {path: termFilter},
-                {description: termFilter},
-                {"fragment.name": termFilter},
-                {"leftSelection.name": termFilter},
-                {"rightSelection.name": termFilter},
-                {"equivSelection.name": termFilter}
-            ]
-        }
+        if (q !== undefined) filter.$text = {$search:q}
         if (adate !== undefined) filter.date = {$lt: new Date(adate)}
-
         if (g !== undefined) filter["quantity.g"] = g
         if (oid !== undefined) filter.oid = oid
         if (c0 !== undefined) filter["cat.c0"] = c0
