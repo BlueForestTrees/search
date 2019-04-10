@@ -4,7 +4,6 @@ const run = require("express-blueforest").run
 const registry = require("mongo-registry")
 const col = registry.col
 const ENV = require("./../env")
-const regexEscape = require("regex-escape")
 
 const searchMixin = {
     projection: {
@@ -25,12 +24,11 @@ router.get("/api/search",
     v.optionalValidQ,
     v.optionalValidG,
     v.optionnalAfterIdx,
-    v.optionnalC0,
-    v.optionnalC1,
-    v.optionnalC2,
-    v.optionnalC3,
-    v.optionnalC4,
-    run(({oid, g, q, aidx, adate, ps, c0, c1, c2, c3, c4}) => {
+    v.optionnalCat,
+    v.optionnalIid,
+    v.optionnalFid,
+    v.optionnalType,
+    run(({oid, g, q, aidx, adate, ps, cat, iid, fid, t}) => {
 
         const filter = {}
 
@@ -39,12 +37,11 @@ router.get("/api/search",
         if (adate !== undefined) filter.date = {$lt: new Date(adate)}
         if (g !== undefined) filter["quantity.g"] = g
         if (oid !== undefined) filter.oid = oid
-        if (c0 !== undefined) filter["cat.c0"] = c0
-        if (c1 !== undefined) filter["cat.c1"] = c1
-        if (c2 !== undefined) filter["cat.c2"] = c2
-        if (c3 !== undefined) filter["cat.c3"] = c3
-        if (c4 !== undefined) filter["cat.c4"] = c4
+        if (cat !== undefined) filter.cats = cat
         if (aidx !== undefined) filter._id = {$lt: aidx}
+        if (iid !== undefined) filter["impact.impactId"] = iid
+        if (fid !== undefined) filter["facet.facetId"] = fid
+        if (t !== undefined) filter.searchType = t
 
         return col(ENV.DB_COLLECTION)
             .find(filter, searchMixin)

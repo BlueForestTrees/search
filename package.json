@@ -1,6 +1,6 @@
 {
   "name": "search",
-  "version": "0.0.4",
+  "version": "1.0.6",
   "description": "search module",
   "main": "index.js",
   "repository": "https://github.com/BlueForestTrees/search.git",
