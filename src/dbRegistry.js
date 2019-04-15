@@ -47,4 +47,14 @@ module.exports = [
         log: "facet.facetId idx",
         script: () => db.col(ENV.DB_COLLECTION).createIndex({"facet.facetId": 1})
     },
+    {
+        version: "1.0.7",
+        log: "drop impact.impactId idx",
+        script: () => db.col(ENV.DB_COLLECTION).dropIndex({"impact.impactId": 1})
+    },
+    {
+        version: "1.0.7",
+        log: "drop facet.facetId idx",
+        script: () => db.col(ENV.DB_COLLECTION).dropIndex({"facet.facetId": 1})
+    },
 ]
