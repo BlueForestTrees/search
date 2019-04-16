@@ -22,20 +22,18 @@ router.get("/api/search",
     v.validADate,
     v.optionnalPageSize,
     v.optionalValidQ,
-    v.optionalValidG,
     v.optionnalAfterIdx,
     v.optionnalCat,
     v.optionnalIid,
     v.optionnalFid,
     v.optionnalType,
-    run(({oid, g, q, aidx, adate, ps, cat, iid, fid, t}) => {
+    run(({oid, q, aidx, adate, ps, cat, iid, fid, t}) => {
 
         const filter = {}
 
         if (oid !== undefined) filter.oid = oid
         if (q !== undefined) filter.$text = {$search:q}
         if (adate !== undefined) filter.date = {$lt: new Date(adate)}
-        if (g !== undefined) filter["quantity.g"] = g
         if (oid !== undefined) filter.oid = oid
         if (cat !== undefined) filter.cats = cat
         if (aidx !== undefined) filter._id = {$lt: aidx}

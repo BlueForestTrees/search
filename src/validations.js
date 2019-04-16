@@ -1,7 +1,6 @@
 const objectNoEx = require("mongo-registry").objectNoEx
 const v = require("express-validator/check")
 const check = v.check
-const grandeursKeys = ["PNOF", "PDF", "DALY", "CTUh", "CTUe", "Ene1", "Ene2", "Dens", "Nomb", "Volu", "Duré", "Mass", "Surf", "Long", "Pri1", "Pri2", "Tran"]
 const searchTypes = ["trunk", "game", "info"]
 
 const optionnalPageSize = [
@@ -28,7 +27,5 @@ const optionnalCat = optionalMongoId("cat")
 const optionnalIid = optionalMongoId("iid")
 const optionnalFid = optionalMongoId("fid")
 const optionnalType = check("t").exists().isIn(searchTypes).optional()
-const grandeur = chain => chain.isIn(grandeursKeys).withMessage("should be Mass, Dens, Long, Tran...")
-const optionalValidG = grandeur(check("g").optional())
 
-module.exports = {optionnalPageSize, validADate, optionnalCat, optionnalType, mongoId, optionalMongoId, validMongoId, validOptionalQ, validOptionalOid, optionnalAfterIdx, optionnalFid, optionnalIid, optionalValidQ, optionalValidG}
+module.exports = {optionnalPageSize, validADate, optionnalCat, optionnalType, mongoId, optionalMongoId, validMongoId, validOptionalQ, validOptionalOid, optionnalAfterIdx, optionnalFid, optionnalIid, optionalValidQ}
