@@ -15,6 +15,7 @@ const optionnalPageSize = [
         max: 30
     }).withMessage(`must be an integer between 1 and 30 (default to ${10})`).toInt()
 ]
+const number = chain => chain.exists().custom(v => !isNaN(Number.parseFloat(v))).withMessage("must be a valid number").customSanitizer(Number.parseFloat)
 const validADate = check("adate").optional().isISO8601()
 const validOptionalQ = check('q').optional().exists().isLength({min: 1, max: 30})
 const mongoId = chain => chain.exists().isMongoId().withMessage("invalid mongo id").customSanitizer(objectNoEx)
@@ -27,5 +28,6 @@ const optionnalCat = optionalMongoId("cat")
 const optionnalIid = optionalMongoId("iid")
 const optionnalFid = optionalMongoId("fid")
 const optionnalType = check("t").exists().isIn(searchTypes).optional()
+const optionnalBqt = field => number(check(field)).optional()
 
-module.exports = {optionnalPageSize, validADate, optionnalCat, optionnalType, mongoId, optionalMongoId, validMongoId, validOptionalQ, validOptionalOid, optionnalAfterIdx, optionnalFid, optionnalIid, optionalValidQ}
+module.exports = {optionnalPageSize, optionnalBqt, validADate, optionnalCat, optionnalType, mongoId, optionalMongoId, validMongoId, validOptionalQ, validOptionalOid, optionnalAfterIdx, optionnalFid, optionnalIid, optionalValidQ}
