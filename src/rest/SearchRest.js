@@ -44,7 +44,6 @@ router.get("/api/search",
         if (iid !== undefined) {
             filter["impact.impactId"] = iid
             if (ibqt !== undefined && ibqt !== null) {
-                console.log("impact 1")
                 mixin = searchMixinImpact
             }
         }
@@ -64,13 +63,12 @@ router.get("/api/search",
             .then(trunks => trunks.map(t => {
                 //on retourne un trunk pour 1 bqt de l'impact
                 if (mixin === searchMixinImpact) {
-                    console.log("impact 2")
-                    t.quantity.bqt = t.quantity.bqt * ibqt / t.impact[0].bqt
+                    t.quantity.bqt = ibqt / t.impact[0].bqt
                     delete t.impact
                     return t
                     //on retourne un trunk pour 1 bqt du facet
                 } else if (mixin === searchMixinFacet) {
-                    t.quantity.bqt = t.quantity.bqt * fbqt / t.facet[0].bqt
+                    t.quantity.bqt = fbqt / t.facet[0].bqt
                     delete t.facet
                     return t
                 } else {
