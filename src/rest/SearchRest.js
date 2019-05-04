@@ -14,7 +14,7 @@ const searchMixin = {
         "fragment.name": 1, "leftSelection.name": 1, "rightSelection.name": 1, "equivSelection.name": 1
     }
 }
-const searchMixinImpact = {projection: {...searchMixin.projection, "impact.$.impactId": 1}}
+const searchMixinImpact = {projection: {...searchMixin.projection, "impactTank.$.impactId": 1}}
 const searchMixinFacet = {projection: {...searchMixin.projection, "facet.$.facetId": 1}}
 const router = Router()
 
@@ -42,7 +42,7 @@ router.get("/api/search",
         if (cat !== undefined) filter.cats = cat
         if (aidx !== undefined) filter._id = {$lt: aidx}
         if (iid !== undefined) {
-            filter["impact.impactId"] = iid
+            filter["impactTank.impactId"] = iid
             if (ibqt !== undefined && ibqt !== null) {
                 mixin = searchMixinImpact
             }
@@ -63,8 +63,8 @@ router.get("/api/search",
             .then(trunks => trunks.map(t => {
                 //on retourne un trunk pour 1 bqt de l'impact
                 if (mixin === searchMixinImpact) {
-                    t.quantity.bqt = ibqt / t.impact[0].bqt
-                    delete t.impact
+                    t.quantity.bqt = ibqt / t.impactTank[0].bqt
+                    delete t.impactTank
                     return t
                     //on retourne un trunk pour 1 bqt du facet
                 } else if (mixin === searchMixinFacet) {
